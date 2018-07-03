@@ -1,49 +1,46 @@
 buildscript {
     repositories {
-        google()
-        // You can search here for sdk's
-        // http://search.maven.org/
-        mavenLocal()
-
-        // You can search here for sdk's
-        // https://bintray.com/bintray/jcenter
+		google()
         jcenter()
-
-        flatDir {
+        mavenCentral()
+        maven { url "https://maven.google.com" }
+		
+		flatDir {
             dirs System.getProperty("user.dir") + '/libs'
         }
     }
 
     dependencies {
-        // You can update gradle by changing build-folder/android-build/gradle/wrapper/gradle-wrapper.properties
         classpath 'com.android.tools.build:gradle:3.1.0'
-        classpath 'com.google.gms:google-services:3.0.0'
+        classpath 'com.google.gms:google-services:4.0.1'
     }
 }
 
+
+
 allprojects {
     repositories {
-        mavenLocal()
         jcenter()
-
+        mavenCentral()
         maven { url "https://maven.google.com" }
-
-        flatDir {
+		
+		flatDir {
             dirs System.getProperty("user.dir") + '/libs'
         }
     }
 
     /*
-    gradle.projectsEvaluated {
+	gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:deprecation"
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
         }
     }
-    */
+	*/
 }
 
-apply plugin: 'com.android.application'
 
+
+apply plugin: 'com.android.application'
 
 android {
     /*******************************************************
@@ -73,33 +70,30 @@ android {
             renderscript.srcDirs = ['src']
             assets.srcDirs = ['assets']
             jniLibs.srcDirs = ['libs']
-       }
+        }
     }
 
     lintOptions {
         abortOnError false
     }
-
-    dexOptions {
+	
+	dexOptions {
         preDexLibraries = false
     }
 
     defaultConfig {
-        applicationId "com.blackgrain.android.firebasetest" // Used by Firebase auto-config (the google-services.json from Firebase console)
-        //minSdkVersion 14
-        //targetSdkVersion 25
-        //versionCode 1
-        //versionName "1.0"
-
-        //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
-        vectorDrawables.useSupportLibrary = true
-
-        // Enabling multidex support.
-        multiDexEnabled = true
-
+        applicationId "com.blackgrain.android.firebasetest"
+		
+                multiDexEnabled = false
+    }
+	
+	applicationVariants.all {
+        variant -> variant.outputs.all {
+            outputFileName = "../" + outputFileName
+        }
     }
 }
+
 
 // Pre-experimental Gradle plug-in NDK boilerplate below.
 // Right now the Firebase plug-in does not work with the experimental
@@ -126,11 +120,11 @@ project.ext {
         }
     }
 
-    if (!(new File(firebase_cpp_sdk_dir)).exists()) {
+    /*if (!(new File(firebase_cpp_sdk_dir)).exists()) {
         throw new StopActionException(
             sprintf('Firebase C++ SDK directory %s does not exist', firebase_cpp_sdk_dir)
         )
-    }
+    }*/
     println 'QtFirebase using Firebase C++ SDK located in ' + firebase_cpp_sdk_dir + ' (from ' + firebaseSdkUsed + ')'
 
     // Check the NDK location using the same configuration options as the
@@ -168,28 +162,31 @@ dependencies {
 
     compile 'com.android.support:multidex:1.+'
 
-    compile 'com.android.support:appcompat-v7:25.0.1'         // Optional??
-    compile 'com.google.android.gms:play-services-base:12.+'  // Mandatory - Firebase rely on Google Play services
+    compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.google.android.gms:play-services-base:15.+'
 
     // For AdMob support
-    compile 'com.google.firebase:firebase-ads:12.+'
+    compile 'com.google.firebase:firebase-ads:15.+'
 
     // For Google Analytics support
-    compile 'com.google.firebase:firebase-core:12.+'         // Recommended package
-    // compile 'com.google.firebase:firebase-analytics:12.+' // deprecated
+    compile 'com.google.firebase:firebase-core:15.+'
+    // compile 'com.google.firebase:firebase-analytics:15.+'
+    
 
     // For RemoteConfig support
-    compile 'com.google.firebase:firebase-config:12.+'
+    compile 'com.google.firebase:firebase-config:15.+'
 
     // For Messaging support
     compile 'com.google.firebase.messaging.cpp:firebase_messaging_cpp@aar'
-    compile 'com.google.firebase:firebase-messaging:12.+'
+    compile 'com.google.firebase:firebase-messaging:15.+'
+	compile 'com.google.firebase:firebase-common:15.+'
 
     // For Auth support
-    compile 'com.google.firebase:firebase-auth:12.+'
-
+    compile 'com.google.firebase:firebase-auth:15.+'
+	
+	
     // For Database support
-    compile 'com.google.firebase:firebase-database:12.+'
+    compile 'com.google.firebase:firebase-database:15.+'
 
 }
 

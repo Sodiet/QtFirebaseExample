@@ -18,7 +18,7 @@ Page {
             id: titleText
             //anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            text:"Email authentification"
+            text:"Sms authentification"
         }
 
         Text{
@@ -48,6 +48,17 @@ Page {
         Auth {
             id: auth
 
+            onCodeSent: {
+                textTest.visible = true
+                registerButton.visible = true;
+                textTest.text = "123456" //code
+            }
+
+            onSignedInChanged: {
+                textTest.visible = !auth.signedIn
+                registerButton.visible = !auth.signedIn
+            }
+
             onCompleted: {
                 if(success) {
                     if(actionId == Auth.ActionSignIn) {
@@ -58,6 +69,10 @@ Page {
                         statusText.text += "Email: " + email();
                         statusText.text += "\n";
                         statusText.text += "Uid: " + uid();
+                        statusText.text += "\n";
+                        statusText.text += "Number: " + number();
+                        statusText.text += "\n";
+                        statusText.text += "ID: " + id();
                     } else if(actionId == Auth.ActionRegister) {
                         statusText.text = "Registered success";
                     } else if(actionId == Auth.ActionSignOut) {
@@ -82,7 +97,7 @@ Page {
                 text: "SignIn"
                 enabled: !auth.running && !auth.signedIn
                 onClicked: {
-                    auth.signIn("test@test.com","test");
+                    auth.smsSignIn("+79000000000")
                 }
             }
             Button {
@@ -93,13 +108,22 @@ Page {
                 }
             }
 
+            TextField {
+                id: textTest
+                visible: false
+                placeholderText: qsTr("Enter code")
+            }
+
             Button {
+                id: registerButton
                 text: "Register"
-                enabled: !auth.running && !auth.signedIn
+                visible: false
                 onClicked: {
-                    auth.registerUser("test@test.com","test");
+                    auth.codeReceived(textTest.text)
                 }
             }
+
         }
     }
 }
+
