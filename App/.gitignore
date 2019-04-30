@@ -1,2 +1,6 @@
 # Ignore assets folder in android/
 android/assets
+.build/
+.gradle/
+.idea/
+android.iml

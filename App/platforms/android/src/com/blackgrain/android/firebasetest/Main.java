@@ -3,6 +3,8 @@ package com.blackgrain.android.firebasetest;
 import org.qtproject.qt5.android.bindings.QtApplication;
 import org.qtproject.qt5.android.bindings.QtActivity;
 
+import com.qtfirebase.auth.QtFirebaseAuthActivity;
+
 import android.util.Log;
 import android.support.v7.app.AppCompatActivity;
 
@@ -16,6 +18,8 @@ import com.google.firebase.messaging.MessageForwardingService;
 public class Main extends QtActivity {
 
     /** Called when the activity is first created. */
+    private static final int QFGoogleSignIn = 379056123;
+	private QtFirebaseAuthActivity authActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,7 +27,14 @@ public class Main extends QtActivity {
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        authActivity = new QtFirebaseAuthActivity("", 0, this); //delete handler
+
     }
+	
+	public void googleSignIn()
+	{
+		authActivity.login();
+	}
 
 
     /**
@@ -76,4 +87,14 @@ public class Main extends QtActivity {
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == QFGoogleSignIn)
+        {
+            authActivity.activityResult(data);
+        }
+    }
 }

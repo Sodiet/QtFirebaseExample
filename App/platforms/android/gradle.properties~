@@ -1,6 +1,6 @@
-systemProp.firebase_cpp_sdk.dir=D:/GitHub/QtFirebaseExample/extensions/QtFirebase/firebase_cpp_sdk
-systemProp.ndk_dir=C:/ProgramData/Microsoft/AndroidNDK64/android-ndk-r12b
+systemProp.ndk_dir=C:/ProgramData/Microsoft/AndroidNDK64/android-ndk-r13b
 androidBuildToolsVersion=25.0.3
-androidCompileSdkVersion=23
+androidCompileSdkVersion=25
 buildDir=.build
-qt5AndroidDir=D:/Qt/5.10.1/android_armv7/src/android/java
+qt5AndroidDir=C:/Qt/5.10.1/android_armv7/src/android/java
+systemProp.firebase_cpp_sdk.dir=C:/Users/User/Desktop/1/QtFirebaseExample/extensions/firebase_cpp_sdk

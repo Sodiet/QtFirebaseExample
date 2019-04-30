@@ -97,7 +97,8 @@ Page {
                 text: "SignIn"
                 enabled: !auth.running && !auth.signedIn
                 onClicked: {
-                    auth.smsSignIn("+79000000000")
+                    //auth.smsSignIn("+79000000000")
+                    auth.googleSignIn()
                 }
             }
             Button {
@@ -107,7 +108,6 @@ Page {
                     auth.signOut();
                 }
             }
-
             TextField {
                 id: textTest
                 visible: false

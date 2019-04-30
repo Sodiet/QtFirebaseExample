@@ -62,8 +62,10 @@ android {
 
     sourceSets {
         main {
+			sprintf('firebase_cpp_sdk_dir: %s', System.getProperty('firebase_cpp_sdk.dir'))
             manifest.srcFile 'AndroidManifest.xml'
-            java.srcDirs = [qt5AndroidDir + '/src', 'src', 'java']
+            java.srcDirs = [qt5AndroidDir + '/src', 'src', 'java',
+							System.getProperty('firebase_cpp_sdk.dir') + '/../QtFirebase/src/android']
             aidl.srcDirs = [qt5AndroidDir + '/src', 'src', 'aidl']
             res.srcDirs = [qt5AndroidDir + '/res', 'res']
             resources.srcDirs = ['src']
@@ -87,7 +89,7 @@ android {
                 multiDexEnabled = false
     }
 	
-	applicationVariants.all {
+    applicationVariants.all {
         variant -> variant.outputs.all {
             outputFileName = "../" + outputFileName
         }
@@ -160,33 +162,31 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile fileTree(dir: 'src', include: ['*.jar'])
 
-    compile 'com.android.support:multidex:1.+'
-
     compile 'com.android.support:appcompat-v7:25.0.1'
-    compile 'com.google.android.gms:play-services-base:15.+'
+    compile 'com.google.android.gms:play-services-base:15.0.1'
 
     // For AdMob support
-    compile 'com.google.firebase:firebase-ads:15.+'
+    compile 'com.google.firebase:firebase-ads:15.0.1'
 
     // For Google Analytics support
-    compile 'com.google.firebase:firebase-core:15.+'
-    // compile 'com.google.firebase:firebase-analytics:15.+'
-    
-
+    compile 'com.google.firebase:firebase-core:16.0.1'
+    // compile 'com.google.firebase:firebase-analytics:12.+'
     // For RemoteConfig support
-    compile 'com.google.firebase:firebase-config:15.+'
+    compile 'com.google.firebase:firebase-config:16.0.0'
 
     // For Messaging support
     compile 'com.google.firebase.messaging.cpp:firebase_messaging_cpp@aar'
-    compile 'com.google.firebase:firebase-messaging:15.+'
-	compile 'com.google.firebase:firebase-common:15.+'
+    compile 'com.google.firebase:firebase-messaging:17.1.0'
 
     // For Auth support
-    compile 'com.google.firebase:firebase-auth:15.+'
-	
-	
+    compile 'com.google.firebase:firebase-auth:16.0.1'
+	compile 'com.google.android.gms:play-services-auth:16.0.0'
+	//compile 'com.google.android.gms:play-services-ads:16.0.2'
+
     // For Database support
-    compile 'com.google.firebase:firebase-database:15.+'
+    compile 'com.google.firebase:firebase-database:16.0.1'
+
+    compile 'com.google.firebase:firebase-common:16.0.0'
 
 }
 
