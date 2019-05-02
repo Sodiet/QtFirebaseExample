@@ -16,6 +16,7 @@
 
 # Qt-es
 
+extensions/firebase_cpp_sdk
 /.qmake.cache
 /.qmake.stash
 *.pro.user

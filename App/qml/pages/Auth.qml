@@ -18,7 +18,7 @@ Page {
             id: titleText
             //anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            text:"Sms authentification"
+            text:"Social auth"
         }
 
         Text{
@@ -49,13 +49,14 @@ Page {
             id: auth
 
             onCodeSent: {
-                textTest.visible = true
+                smsCodeText.visible = true
                 registerButton.visible = true;
-                textTest.text = "123456" //code
+                phoneNumberText.visible = false;
+                smsCodeText.text = "123456" //code
             }
 
             onSignedInChanged: {
-                textTest.visible = !auth.signedIn
+                smsCodeText.visible = !auth.signedIn
                 registerButton.visible = !auth.signedIn
             }
 
@@ -94,35 +95,67 @@ Page {
             id: buttonsAuth
 
             Button {
-                text: "SignIn"
+                text: "SignIn Google"
                 enabled: !auth.running && !auth.signedIn
                 onClicked: {
                     //auth.smsSignIn("+79000000000")
                     auth.googleSignIn()
                 }
             }
+
+            Button {
+                text: "SignIn Facebook"
+                enabled: !auth.running && !auth.signedIn
+                onClicked: {
+                    auth.facebookSignIn()
+                }
+            }
+            Button {
+                text: "SignIn SMS"
+                enabled: !auth.running && !auth.signedIn
+                onClicked: {
+                    auth.smsSignIn(phoneNumberText.text)
+                    registerButton.visible
+                }
+            }
+            Button {
+                id: emailButton
+                text: "Email SignIn"
+                visible: !auth.running && !auth.signedIn
+                onClicked: {
+                    auth.registerUser("text@mail.com", "1234567")
+                }
+            }
+            TextField {
+                id: phoneNumberText
+                visible: !auth.running && !auth.signedIn
+                placeholderText: qsTr("Enter phone number")
+            }
+
             Button {
                 text: "SignOut"
                 enabled: !auth.running && auth.signedIn
                 onClicked: {
                     auth.signOut();
+                    smsCodeText.visible = false
+                    registerButton.visible = false
                 }
             }
             TextField {
-                id: textTest
+                id: smsCodeText
                 visible: false
                 placeholderText: qsTr("Enter code")
             }
 
             Button {
                 id: registerButton
-                text: "Register"
+                text: "CodeReceived"
                 visible: false
                 onClicked: {
-                    auth.codeReceived(textTest.text)
+                    auth.codeReceived(smsCodeText.text)
+                    //auth.registerUser("wowr-87@mail.ru", "1234567")
                 }
             }
-
         }
     }
 }

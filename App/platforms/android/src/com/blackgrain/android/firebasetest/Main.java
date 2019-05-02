@@ -6,7 +6,10 @@ import org.qtproject.qt5.android.bindings.QtActivity;
 import com.qtfirebase.auth.QtFirebaseAuthActivity;
 
 import android.util.Log;
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
+
+import com.facebook.FacebookSdk;
 
 import android.view.WindowManager;
 
@@ -18,23 +21,29 @@ import com.google.firebase.messaging.MessageForwardingService;
 public class Main extends QtActivity {
 
     /** Called when the activity is first created. */
-    private static final int QFGoogleSignIn = 379056123;
-	private QtFirebaseAuthActivity authActivity;
+    private QtFirebaseAuthActivity authActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        FacebookSdk.setApplicationId("429883020919797"); //AndroidManifest
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        authActivity = new QtFirebaseAuthActivity("", 0, this); //delete handler
-
+        authActivity = new QtFirebaseAuthActivity(this);
     }
 	
 	public void googleSignIn()
-	{
-		authActivity.login();
+        {
+            authActivity.googleSignIn();
 	}
+
+        public void facebookLogIn()
+        {
+            authActivity.facebookLogIn();
+        }
 
 
     /**
@@ -92,9 +101,9 @@ public class Main extends QtActivity {
     {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == QFGoogleSignIn)
-        {
+        if (requestCode == authActivity.QFGoogleSignIn && resultCode == Activity.RESULT_OK)
             authActivity.activityResult(data);
-        }
+
+        authActivity.passToCallbackManager(requestCode, resultCode, data);
     }
 }
