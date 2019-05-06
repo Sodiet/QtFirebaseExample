@@ -153,7 +153,6 @@ Page {
                 visible: false
                 onClicked: {
                     auth.codeReceived(smsCodeText.text)
-                    //auth.registerUser("wowr-87@mail.ru", "1234567")
                 }
             }
         }
