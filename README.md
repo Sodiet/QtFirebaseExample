@@ -3,7 +3,7 @@
 
 # Social Sign-In
 
-    1. Fork QtFirebase Example and QtFirebase
+    1. Download QtFirebase Example and QtFirebase
     2. Download Firebase C++ SDK and unzip it to "QtFirebaseExample/extensions" ("extensions/firebase_cpp_sdk/{folders Android, frameworks and others}")
     3. Run "extensions/QtFirebase/src/ios/download_sdks.sh"
 
