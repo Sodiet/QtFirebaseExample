@@ -91,7 +91,7 @@ QTFIREBASE_CONFIG += analytics messaging admob remote_config auth database
 # DEFINES += QTFIREBASE_DISABLE_FIX_ANDROID_AUTO_APP_STATE_VISIBILTY
 
 # Includes QtFirebase:
-include(../../../extensions/QtFirebase/qtfirebase.pri)
+include(../extensions/QtFirebase/qtfirebase.pri)
 
 RESOURCES += \
     qml.qrc
